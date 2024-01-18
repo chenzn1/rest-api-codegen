@@ -1,0 +1,68 @@
+[
+  {
+    "name": "getUsers",
+    "method": "GET",
+      "url": "/users",
+      "request": {
+        "query!": {
+          "limit!": "number",
+          "offset!": "number"
+        }
+      },
+      "response": {
+        "data!": {
+          "users!": [
+            {
+              "id!": "string",
+              "name!": "string",
+              "age": "number"
+            }
+          ]
+        }
+      }
+  },
+  {
+    "name": "getUser",
+    "method": "GET",
+      "url": "/users/:id",
+      "request": {
+        "query": {
+          "limit!": "number",
+          "offset!": "number"
+        },
+        "params": {
+          "id!": "string"
+        }
+      },
+      "response": {
+        "data!": {
+          "user!":
+            {
+              "id!": "string",
+              "name!": "string",
+              "age": "number"
+            }
+          
+        }
+      }
+  },
+  {
+    "name": "createUser",
+    "method": "post",
+      "url": "/users",
+      "request": {
+        "body": {
+          "name": "string"
+        }
+      },
+      "response": {
+        "data!": {
+          "user!": {
+            "id!": "string",
+            "name!": "string",
+            "age!": "number"
+          }
+        }
+      }
+  }
+]
