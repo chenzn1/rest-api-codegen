@@ -1,1 +1,4 @@
 *.generated.ts
+dist
+.rollup.cache
+tsconfig.tsbuildinfo

@@ -1,4 +1,4 @@
-import {writeFile} from 'fs/promises'
+import {writeFile, readFile} from 'fs/promises'
 interface Api {
   name: string
   method?: string
@@ -59,9 +59,8 @@ export class ReactQueryGenerator {
     this.output = output
   }
   private async loadConfig() {
-    console.log(this.schema)
-
-    this.apis = (await import(this.schema)).default
+    const contents = await readFile(this.schema, 'utf-8')
+    this.apis = JSON.parse(contents)
   }
   async run() {
     await this.loadConfig()

@@ -2,17 +2,23 @@
   "name": "@rest-api-codegen/react-query",
   "version": "1.0.0",
   "description": "",
+  "main": "dist/index.js",
   "scripts": {
+    "build": "rollup -c rollup.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
+  "type": "module",
   "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.6",
     "@tanstack/react-query": "^5.17.15",
     "@types/node": "^20.11.5",
     "@types/yargs": "^17.0.32",
+    "rollup": "^4.9.5",
     "ts-node": "^10.9.2",
+    "tslib": "^2.6.2",
     "typescript": "^5.3.3"
   },
   "dependencies": {
