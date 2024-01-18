@@ -1,16 +1,24 @@
 {
   "name": "@rest-api-codegen/react-query",
   "version": "0.0.1",
-  "description": "",
+  "description": "REST API & React Query Code Generator",
   "main": "dist/index.js",
   "scripts": {
     "build": "rollup -c rollup.config.js"
   },
-  "keywords": ["REST API codegen", "code", "generator", "react query", "react query codegen", "REST API", "RESTFul API"],
+  "keywords": [
+    "REST API codegen",
+    "code",
+    "generator",
+    "react query",
+    "react query codegen",
+    "REST API",
+    "RESTFul API"
+  ],
   "author": "Michael <312073339@qq.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/chenzn1/rest-api-codegen.git"
+    "url": "git+https://github.com/chenzn1/rest-api-codegen.git"
   },
   "license": "MIT",
   "type": "module",
@@ -26,5 +34,9 @@
   },
   "dependencies": {
     "yargs": "^17.7.2"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/chenzn1/rest-api-codegen/issues"
+  },
+  "homepage": "https://github.com/chenzn1/rest-api-codegen/tree/main/packages/react-query#readme"
 }
