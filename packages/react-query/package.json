@@ -11,7 +11,11 @@
   "devDependencies": {
     "@tanstack/react-query": "^5.17.15",
     "@types/node": "^20.11.5",
+    "@types/yargs": "^17.0.32",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "yargs": "^17.7.2"
   }
 }

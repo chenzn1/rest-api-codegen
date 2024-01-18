@@ -1,12 +1,8 @@
-import { ReactQueryGenerator } from "../src";
+import { ReactQueryGenerator } from "../src/generator";
 import path from 'path'
 
 new ReactQueryGenerator({
-  config: path.join(__dirname, 'api.json'),
+  schema: path.join(__dirname, 'api.json'),
   fetcher: './utils/fetcher#apiFetcher',
   output: path.join(__dirname,  'api.generated.ts'),
 })
-
-setTimeout(() => {
-  console.log('end')
-}, 10000)

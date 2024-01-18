@@ -23,7 +23,7 @@ interface FetcherOptions {
 }
 
 interface ReactQueryGeneratorOptions {
-  config: string
+  schema: string
   fetcher: string
   output: string
 }
@@ -48,20 +48,20 @@ function getUrl(url: string, params: Record<string, string | number>) {
 }
 
 export class ReactQueryGenerator {
-  private config: string
+  private schema: string
   private fetcher: string
   private apis: Api[] =[]
   private output: string
 
-  constructor({ config, fetcher, output }: ReactQueryGeneratorOptions) {
-    this.config = config;
+  constructor({ schema, fetcher, output }: ReactQueryGeneratorOptions) {
+    this.schema = schema;
     this.fetcher = fetcher;
     this.output = output
-    this.run()
   }
   private async loadConfig() {
-    this.apis = (await import(this.config)).default
-    console.log(this.apis)
+    console.log(this.schema)
+
+    this.apis = (await import(this.schema)).default
   }
   async run() {
     await this.loadConfig()
