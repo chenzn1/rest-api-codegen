@@ -39,18 +39,11 @@ function upperFirst(str: string) {
   return `${str[0].toLocaleUpperCase()}${str.slice(1)}`
 }
 
-function getUrl(url: string, params: Record<string, string | number>) {
-  let nUrl = url 
-  for(const field in params) {
-    nUrl = nUrl.replace(`:${field}`, `${params[field]}`)
-  }
-  return nUrl
-}
-
 export class ReactQueryGenerator {
   private schema: string
   private fetcher: string
   private apis: Api[] =[]
+  private types: Record<string, any> = {}
   private output: string
 
   constructor({ schema, fetcher, output }: ReactQueryGeneratorOptions) {
@@ -60,7 +53,9 @@ export class ReactQueryGenerator {
   }
   private async loadConfig() {
     const contents = await readFile(this.schema, 'utf-8')
-    this.apis = JSON.parse(contents)
+    const schema = JSON.parse(contents)
+    this.apis = schema.apis
+    this.types = schema.types
   }
   async run() {
     await this.loadConfig()
@@ -73,6 +68,7 @@ export class ReactQueryGenerator {
     contents.push('import * as reactQuery from "@tanstack/react-query";')
     contents.push(`import ${fetcherFunc? `{ ${fetcherFunc} as fetcher }`: 'default as fetcher'} from "${fetcherPath}";`)
 
+    contents.push(...this.genTypes())
     contents.push(`
       function getUrl(url: string, params?: Record<string, string | number>) {
         if (!params) {
@@ -120,10 +116,20 @@ export class ReactQueryGenerator {
     }
     await writeFile(this.output, contents.join('\n'))
   }
-  genInterface(schema: Record<string, any> | Record<string, any>[]) {
+  genTypes() {
+    const types: string[] = []
+    for(const key in this.types) {
+      types.push(`interface ${key} ${this.genInterface(this.types[key])}`)
+    }
+    return types
+  }
+  genInterface(schema: Record<string, any> | Record<string, any>[] | string | string[]) {
     let tSchema = Array.isArray(schema)? schema[0]: schema
     if (!tSchema) {
       return 
+    }
+    if (typeof tSchema === 'string') {
+      return `${tSchema}${Array.isArray(schema)? '[]': ''}`
     }
     const types: string[] = []
     for(const key in tSchema) {

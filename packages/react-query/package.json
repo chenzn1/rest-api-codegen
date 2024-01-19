@@ -21,7 +21,6 @@
     "url": "git+https://github.com/chenzn1/rest-api-codegen.git"
   },
   "license": "MIT",
-  "type": "module",
   "devDependencies": {
     "@rollup/plugin-typescript": "^11.1.6",
     "@tanstack/react-query": "^5.17.15",
