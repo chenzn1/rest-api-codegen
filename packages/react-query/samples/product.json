@@ -1,0 +1,61 @@
+{
+  "types": {
+    "Product": {
+      "id!": "string",
+      "name!": "string",
+      "age": "number"
+    }
+  },
+  "apis": [
+    {
+      "name": "getProducts",
+      "method": "GET",
+        "url": "/products",
+        "request": {
+          "query!": {
+            "limit!": "number",
+            "offset!": "number"
+          }
+        },
+        "response": {
+          "data!": {
+            "products!": ["Product"]
+          }
+        }
+    },
+    {
+      "name": "getProduct",
+      "method": "GET",
+        "url": "/products/:id",
+        "request": {
+          "query": {
+            "limit!": "number",
+            "offset!": "number"
+          },
+          "params": {
+            "id!": "string"
+          }
+        },
+        "response": {
+          "data!": {
+            "product!": "Product"
+          }
+        }
+    },
+    {
+      "name": "createProduct",
+      "method": "post",
+        "url": "/products",
+        "request": {
+          "body": {
+            "name": "string"
+          }
+        },
+        "response": {
+          "data!": {
+            "product!": "Product"
+          }
+        }
+    }
+  ]
+}

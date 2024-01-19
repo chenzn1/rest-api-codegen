@@ -2,28 +2,29 @@ import yargs from 'yargs/yargs'
 import {hideBin} from 'yargs/helpers'
 import { ReactQueryGenerator } from './generator'
 import path from 'path'
+import { lstat, mkdir, readdir } from 'fs/promises'
+import { existsSync } from 'fs'
 
 const argv = yargs(hideBin(process.argv))
-  .option('schema', {
+  .option('schema-dir', {
     alias: 's',
     type: 'string',
-    description: 'schema file',
+    description: 'schema directory',
   })
   .option('fetcher', {
     alias: 'f',
     type: 'string',
     description: 'fetcher',
   })
-  .option('output', {
+  .option('output-dir', {
     alias: 'o',
     type: 'string',
-    description: 'output file',
+    description: 'output directory',
   })
-  .parse() as {schema: string, fetcher: string, output: string}
+  .parse() as {schemaDir: string, fetcher: string, outputDir: string}
 
-
-  if (!argv.schema) {
-    console.log('Please input schema file!')
+  if (!argv.schemaDir) {
+    console.log('Please input schema directory!')
     process.exit(0) 
   }
 
@@ -32,16 +33,46 @@ const argv = yargs(hideBin(process.argv))
     process.exit(0) 
   }
 
-  if (!argv.output) {
+  if (!argv.outputDir) {
     console.log('Please input output file!')
     process.exit(0) 
   }
 
 
 (async () => {
-  await new ReactQueryGenerator({
-    schema: path.join(process.cwd(), argv.schema),
-    fetcher: argv.fetcher,
-    output: path.join(process.cwd(), argv.output),
-  }).run()
+  if (!existsSync(path.join(process.cwd(), argv.schemaDir))) {
+    console.log('Schema directory no exists!')
+    return
+  }
+
+  const schemaStat = await lstat(path.join(process.cwd(), argv.schemaDir))
+  if (!schemaStat.isDirectory()) {
+    console.log('Schema not a directory!')
+    return
+  }
+
+  if (!existsSync(path.join(process.cwd(), argv.outputDir))) {
+    await mkdir(path.join(process.cwd(), argv.outputDir))
+  } else {
+    const outputStat = await lstat(path.join(process.cwd(), argv.outputDir))
+    if (!outputStat.isDirectory()) {
+      console.log('Output not a directory!')
+      return
+    }
+  }
+  const fileNames = await readdir(path.join(process.cwd(), argv.schemaDir))
+  for (const fileName of fileNames) {
+    if (!fileName.endsWith('.json')) {
+      continue
+    }
+    const stat = await lstat(path.join(process.cwd(), argv.schemaDir, fileName))
+    if (stat.isDirectory()) {
+      continue
+    }
+    await new ReactQueryGenerator({
+      schema: path.join(process.cwd(), argv.schemaDir, fileName),
+      fetcher: argv.fetcher,
+      output: path.join(process.cwd(), argv.outputDir, fileName.replace('.json', '.generated.ts')),
+    }).run()
+  }
 })()
