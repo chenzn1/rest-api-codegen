@@ -1,19 +1,20 @@
 {
   "name": "@rest-api-codegen/react-query",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "REST API Code Generator For React-Query",
   "main": "dist/index.js",
   "scripts": {
-    "build": "rollup -c rollup.config.js"
+    "build": "rollup -c rollup.config.ts --configPlugin typescript"
   },
   "keywords": [
-    "REST API codegen",
+    "openapi codegen",
+    "rest api codegen",
     "code",
+    "openapi",
     "generator",
     "react query",
     "react query codegen",
-    "REST API",
-    "RESTFul API"
+    "rest api"
   ],
   "author": "Michael <312073339@qq.com>",
   "repository": {

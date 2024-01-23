@@ -1,4 +1,5 @@
 # REST API Code Generator For React-Query
+Based on OpenAPI
 
 ## Installation
 
@@ -19,52 +20,6 @@ pnpm add @rest-api-codegen/react-query -D
 command options: `-schema-directory` `-s`
 
 Generator will automatically scan all json files in schema directory.
-
-{schema directory}/sample.json 
-```json
-{
-  "types": {
-    "User": {
-      "id!": "string",
-      "name!": "string",
-      "age": "number"
-    }
-  },
-  "apis": [
-    {
-      "name": "getUsers",
-      "method": "GET",
-        "url": "/users",
-        "request": {
-          "query!": {
-            "limit!": "number",
-            "offset!": "number"
-          }
-        },
-        "response": {
-          "data!": {
-            "users!": ["User"]
-          }
-        }
-    },
-    {
-      "name": "createUser",
-      "method": "post",
-        "url": "/users",
-        "request": {
-          "body": {
-            "name": "string"
-          }
-        },
-        "response": {
-          "data!": {
-            "user!": "User"
-          }
-        }
-    }
-  ]
-}
-```
 
 ### Fetcher
 command options: `-fetcher` `-f`
@@ -104,8 +59,6 @@ pnpm add @rest-api-codegen/react-query -D
 pnpm add @tanstack/react-query
 
 ```
-
-Create sample json in scheme directory, [content like here](#schema-directory)
 
 Create fetcher, [content like here](#fetcher)
 
