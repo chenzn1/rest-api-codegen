@@ -1,6 +1,6 @@
 {
   "name": "@rest-api-codegen/react-query",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "REST API Code Generator For React-Query",
   "main": "dist/index.js",
   "scripts": {
@@ -24,14 +24,18 @@
   "devDependencies": {
     "@rollup/plugin-typescript": "^11.1.6",
     "@tanstack/react-query": "^5.17.15",
+    "@types/lodash": "^4.14.202",
     "@types/node": "^20.11.5",
     "@types/yargs": "^17.0.32",
+    "openapi-typescript": "^6.7.4",
     "rollup": "^4.9.5",
     "ts-node": "^10.9.2",
     "tslib": "^2.6.2",
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "lodash": "^4.17.21",
+    "yaml": "^2.3.4",
     "yargs": "^17.7.2"
   },
   "bugs": {

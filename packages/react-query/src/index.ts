@@ -2,8 +2,11 @@ import yargs from 'yargs/yargs'
 import {hideBin} from 'yargs/helpers'
 import { ReactQueryGenerator } from './generator'
 import path from 'path'
-import { lstat, mkdir, readdir } from 'fs/promises'
+import { lstat, mkdir, readFile, readdir, writeFile } from 'fs/promises'
 import { existsSync } from 'fs'
+import openapiTS from 'openapi-typescript'
+import YAML from 'yaml'
+import { OpenApiReactQueryGenerator } from './openapi-generator'
 
 const argv = yargs(hideBin(process.argv))
   .option('schema-dir', {
@@ -62,17 +65,27 @@ const argv = yargs(hideBin(process.argv))
   }
   const fileNames = await readdir(path.join(process.cwd(), argv.schemaDir))
   for (const fileName of fileNames) {
-    if (!fileName.endsWith('.json')) {
+    if (!fileName.endsWith('.json') && !fileName.endsWith('.yaml')) {
       continue
     }
     const stat = await lstat(path.join(process.cwd(), argv.schemaDir, fileName))
     if (stat.isDirectory()) {
       continue
     }
-    await new ReactQueryGenerator({
-      schema: path.join(process.cwd(), argv.schemaDir, fileName),
-      fetcher: argv.fetcher,
-      output: path.join(process.cwd(), argv.outputDir, fileName.replace('.json', '.generated.ts')),
-    }).run()
+    if (fileName.endsWith('.json') ) {
+      await new ReactQueryGenerator({
+        schema: path.join(process.cwd(), argv.schemaDir, fileName),
+        fetcher: argv.fetcher,
+        output: path.join(process.cwd(), argv.outputDir, fileName.replace('.json', '.generated.ts')),
+      }).run()
+    } else {
+      
+      await new OpenApiReactQueryGenerator({
+        schema: path.join(process.cwd(), argv.schemaDir, fileName),
+        fetcher: argv.fetcher,
+        output: path.join(process.cwd(), argv.outputDir, fileName.replace('.yaml', '.generated.ts')),
+        name: fileName.replace('.yaml', '')
+      }).run()
+    }
   }
 })()

@@ -6,8 +6,8 @@ interface Api {
   request?: {
     query?: Record<string, unknown>
     ['query!']? : Record<string, unknown>
-    params?: Record<string, string | number>
-    ['params!']? : Record<string, string | number>
+    path?: Record<string, string | number>
+    ['path!']? : Record<string, string | number>
     body?: Record<string, unknown> | Record<string, unknown>[]
     ['body!']?: Record<string, unknown> | Record<string, unknown>[]
 
@@ -70,13 +70,13 @@ export class ReactQueryGenerator {
 
     contents.push(...this.genTypes())
     contents.push(`
-      function getUrl(url: string, params?: Record<string, string | number>) {
-        if (!params) {
+      function getUrl(url: string, path?: Record<string, string | number>) {
+        if (!path) {
           return url
         }
         let nUrl = url 
-        for(const field in params) {
-          nUrl = nUrl.replace(\`:\${field}\`, \`\${params[field]}\`)
+        for(const field in path) {
+          nUrl = nUrl.replace(\`:\${field}\`, \`\${path[field]}\`)
         }
         return nUrl
       }
@@ -85,7 +85,7 @@ export class ReactQueryGenerator {
       const requestInterface = api.request? this.genInterface({
         [api.request.query? 'query': 'query!']: api.request.query || api.request['query!'] || 'undefined',
         [api.request.body? 'body': 'body!']: api.request.body || api.request['body!'] || 'undefined',
-        [api.request.params? 'params': 'params!']: api.request.params  || api.request['params!'] || 'undefined',
+        [api.request.path? 'path': 'path!']: api.request.path  || api.request['path!'] || 'undefined',
       }): undefined
       const responseInterface = api.response? this.genInterface(api.response): undefined
       let requestInterfaceName: string | undefined
@@ -150,7 +150,7 @@ export class ReactQueryGenerator {
         queryFn: () => fetcher<${options.responseInterfaceName}>({
           method: "${options.method}",
           ${options.requestInterfaceName? `
-            url: getUrl("${options.url}", request.params),
+            url: getUrl("${options.url}", request.path),
             query: request.query,
             body: request.body,
           `: `url: "${options.url}"`}
@@ -167,7 +167,7 @@ export class ReactQueryGenerator {
         mutationFn: () => fetcher<${options.responseInterfaceName}>({
           method: "${options.method}",
           ${options.requestInterfaceName? `
-            url: getUrl("${options.url}", request.params),
+            url: getUrl("${options.url}", request.path),
             query: request.query,
             body: request.body,
           `: `url: "${options.url}"`}
