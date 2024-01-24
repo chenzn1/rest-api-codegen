@@ -1,0 +1,46 @@
+{
+  "name": "@rest-api-codegen/vue-query",
+  "version": "0.0.3",
+  "description": "REST API Code Generator For Vue Query",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "rollup -c rollup.config.ts --configPlugin typescript"
+  },
+  "keywords": [
+    "openapi codegen",
+    "rest api codegen",
+    "code",
+    "openapi",
+    "generator",
+    "vue query",
+    "vue query codegen",
+    "rest api"
+  ],
+  "author": "Michael <312073339@qq.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chenzn1/rest-api-codegen.git"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@tanstack/vue-query": "^5.17.19",
+    "@types/lodash": "^4.14.202",
+    "@types/node": "^20.11.5",
+    "@types/yargs": "^17.0.32",
+    "rollup": "^4.9.5",
+    "ts-node": "^10.9.2",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "openapi-typescript": "^6.7.4",
+    "yaml": "^2.3.4",
+    "yargs": "^17.7.2"
+  },
+  "bugs": {
+    "url": "https://github.com/chenzn1/rest-api-codegen/issues"
+  },
+  "homepage": "https://github.com/chenzn1/rest-api-codegen/tree/main/packages/vue-query#readme"
+}
